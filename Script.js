@@ -13,12 +13,18 @@ function addCollapseListener() {
 
 function collapseForm(e) {
     var searchForm = e.target.closest('section');
-    // console.log(searchForm);
+    // get the icon element
+    var collapseIcon = e.currentTarget.children[0].children[0];
+
     if (searchForm.dataset.visible === 'visible') {
+        collapseIcon.classList.add('fa-angle-down')
+        collapseIcon.classList.remove('fa-angle-up')
         searchForm.dataset.visible = 'hidden';
         searchForm.children[1].setAttribute('style', 'display:none');
         searchForm.children[2].setAttribute('style', 'display:none');
     } else {
+        collapseIcon.classList.add('fa-angle-up')
+        collapseIcon.classList.remove('fa-angle-down')
         searchForm.dataset.visible = 'visible';
         searchForm.children[1].setAttribute('style', '');
         searchForm.children[2].setAttribute('style', '');
