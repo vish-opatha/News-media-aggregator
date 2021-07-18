@@ -1,5 +1,32 @@
 var htmlBody = document.querySelector('body');
 
+
+function addCollapseListener() {
+    var collapseBtns = document.querySelectorAll('.collapse-btn');
+
+    for (var i = 0; i < collapseBtns.length; i++) {
+        collapseBtns[i].addEventListener('click', function (e) {
+            collapseForm(e);
+        });
+    };
+};
+
+function collapseForm(e) {
+    var searchForm = e.target.closest('section');
+    // console.log(searchForm);
+    if (searchForm.dataset.visible === 'visible') {
+        searchForm.dataset.visible = 'hidden';
+        searchForm.children[1].setAttribute('style', 'display:none');
+        searchForm.children[2].setAttribute('style', 'display:none');
+    } else {
+        searchForm.dataset.visible = 'visible';
+        searchForm.children[1].setAttribute('style', '');
+        searchForm.children[2].setAttribute('style', '');
+    }
+}
+
+addCollapseListener();
+
 dummyData = {
     title: "Test title",
     content: "I am test text-content",
@@ -31,4 +58,4 @@ function createRedditPost(data) {
     htmlBody.appendChild(redditPost);
 };
 
-createRedditPost(dummyData);
+// createRedditPost(dummyData);
