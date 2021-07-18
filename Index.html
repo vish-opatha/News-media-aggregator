@@ -5,37 +5,101 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
     <title>Code Blue</title>
 </head>
+
 <body>
-    <header id="header">Website Name</header>
+    <header class="hero is-primary mb-3">
+        <div class="hero-body">
+            <h1 class="title">News/Media Aggregator</h1>
+            <p class="subtitle">Search and display posts from your favourite news/media website!</p>
+        </div>
+    </header>
 
-    <div class="container">
-        <form>
-            <label for="search-criteria"></label>
-            <select>
-                <option value="subreddit"></option>
-                <option value="search-term"></option>
-            </select>
-            <label for="search-bar"></label>
-            <input type="search" id="search-bar" name="search-bar">
-            <br>
-            <button id="submitbtn">Click Me</button>
-        </form>
-    </div>
+    <main class="container">
+        <section id="search-forms">
+            <section class="card mb-3" data-visible="visible">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Reddit Search - <span class="is-italic has-text-weight-light ml-1">
+                            Get posts related to your search term from Reddit</span>
+                    </p>
+                    <button class="card-header-icon collapse-btn" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </header>
+                <form class="card-content">
+                    <div class="field">
+                        <label class="label">Search Term</label>
+                        <div class="control">
+                            <input type="text" class="input">
+                        </div>
+                        <p class="help">Input help text here</p>
+                    </div>
+                    <fieldset disabled>
+                        <div class="field">
+                            <label class="label">Number of Results</label>
+                            <div class="control">
+                                <input type="number" class="input" value="10">
+                            </div>
+                            <p class="help">Input help text here</p>
+                        </div>
+                    </fieldset>
+                </form>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Submit</a>
+                </footer>
+            </section>
 
-    <div id="resultsCont">
-        <div id="content from api"></div>
-    </div>
-    <div id="results-search-container">
-        <input id="search-bar">
-        <br>
-        <button id="submitbtn">Click Me</button>
-    </div>
+            <section class="card mb-3" data-visible="visible">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Subreddit Search - <span class="is-italic has-text-weight-light ml-1">
+                            Get posts from a specific SubReddit</span>
+                    </p>
+                    <button class="card-header-icon collapse-btn" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </header>
+                <form class="card-content">
+                    <div class="field">
+                        <label class="label">Subreddit Name</label>
+                        <div class="control">
+                            <input type="text" class="input">
+                        </div>
+                        <p class="help">Input help text here</p>
+                    </div>
+                    <fieldset disabled>
+                        <div class="field">
+                            <label class="label">Number of Results</label>
+                            <div class="control">
+                                <input type="number" class="input" value="10">
+                            </div>
+                            <p class="help">Input help text here</p>
+                        </div>
+                    </fieldset>
+                </form>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Submit</a>
+                </footer>
+            </section>
+        </section>
 
-    <script src="Script.js"></script>
+        <div id="resultsCont">
+            <div id="content from api"></div>
+        </div>
+
+        <script src="Script.js"></script>
+    </main>
 
 </body>
-</html>
 
+</html>
