@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <title>Code Blue</title>
 </head>
 <body>
@@ -13,7 +13,13 @@
 
     <div class="container">
         <form>
-            <input id="search-bar">
+            <label for="search-criteria"></label>
+            <select>
+                <option value="subreddit"></option>
+                <option value="search-term"></option>
+            </select>
+            <label for="search-bar"></label>
+            <input type="search" id="search-bar" name="search-bar">
             <br>
             <button id="submitbtn">Click Me</button>
         </form>
