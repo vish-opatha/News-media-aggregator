@@ -5,12 +5,12 @@ var searchRedditBtn =document.querySelector("#search-sub-reddit");
 
 //Following code should happen on the button click event
 //For now, I am using dummy data
-var searchTerm="Adelaide";
+var subredditName="Adelaide";
 
-if (searchTerm) 
+if (subredditName) 
 {
-    getNewListings(searchTerm);
-    searchTerm="";
+    getNewListings(subredditName);
+    subredditName="";
 } 
 
 else 
@@ -19,9 +19,9 @@ else
 }
 
 //########## This function is used to get the new 10 listings of the given subreddit##############
-function getNewListings(searchTerm)
+function getNewListings(subredditName)
 {
-    var fetchUrl="https://www.reddit.com/r/"+searchTerm+"/new.json?limit=10";
+    var fetchUrl="https://www.reddit.com/r/"+subredditName+"/new.json?limit=10";
        
     fetch(fetchUrl)
         .then(function (response) {
@@ -62,6 +62,73 @@ function displayListings (listings)
             var listingUpdated=moment(listings.data.children[i].data.created,"X").format("dddd, MMMM Do YYYY, h:mm:ss a")
            
             //var listingMedia= 
+           
+            console.log(listingTitle);
+            console.log(listingContent); 
+            console.log(listingAuthor);
+            console.log(listingUrl);
+            console.log(listingUpdated);
+    }
+    }   
+  };
+
+//Added by Anthony- Function for the search Term to return the 10 most recent post's related to that term as an object
+var searchTerm="Adelaide";
+
+if (searchTerm) 
+{
+    getNewSearchTerm(searchTerm);
+    searchTerm="";
+} 
+
+else 
+{
+    window.alert("Please enter something to search.")
+}
+
+//########## This function is used to get the new 10 listings of the given SEARCH TERM ##############
+function getNewSearchTerm(searchTerm)
+{
+    var requestUrl="https://www.reddit.com/search.json?/?&linkq="+searchTerm;
+    fetch(requestUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displaySTListings(data);
+                    console.log(data);
+                });
+            } 
+            
+            else if(response.status===404){
+                Window.alert("This does not exist");
+            }
+            })
+                .catch(function (error) {
+                    alert('Cannot connect to Reddit');
+            });          
+            
+}
+
+//########## This function is used to display the new listings ##############
+function displaySTListings (listings) 
+{
+    if (listings.data.children.length === 0) 
+    {
+      console.log("Nothing found to display for this search term.");
+      return;
+    }
+    
+    else
+    {
+        for (var i = 0; i < listings.data.children.length; i++) 
+        {
+            var listingTitle =listings.data.children[i].data.title;
+            var listingContent = listings.data.children[i].data.selftext;
+            var listingAuthor = listings.data.children[i].data.author;
+            var listingUrl =listings.data.children[i].data.url;
+            var listingUpdated=moment(listings.data.children[i].data.created,"X").format("dddd, MMMM Do YYYY, h:mm:ss a")
+           
+            var listingMedia= 
            
             console.log(listingTitle);
             console.log(listingContent); 
