@@ -1,5 +1,38 @@
 var htmlBody = document.querySelector('body');
 
+
+function addCollapseListener() {
+    var collapseBtns = document.querySelectorAll('.collapse-btn');
+
+    for (var i = 0; i < collapseBtns.length; i++) {
+        collapseBtns[i].addEventListener('click', function (e) {
+            collapseForm(e);
+        });
+    };
+};
+
+function collapseForm(e) {
+    var searchForm = e.target.closest('section');
+    // get the icon element
+    var collapseIcon = e.currentTarget.children[0].children[0];
+
+    if (searchForm.dataset.visible === 'visible') {
+        collapseIcon.classList.add('fa-angle-down')
+        collapseIcon.classList.remove('fa-angle-up')
+        searchForm.dataset.visible = 'hidden';
+        searchForm.children[1].setAttribute('style', 'display:none');
+        searchForm.children[2].setAttribute('style', 'display:none');
+    } else {
+        collapseIcon.classList.add('fa-angle-up')
+        collapseIcon.classList.remove('fa-angle-down')
+        searchForm.dataset.visible = 'visible';
+        searchForm.children[1].setAttribute('style', '');
+        searchForm.children[2].setAttribute('style', '');
+    }
+}
+
+addCollapseListener();
+
 dummyData = {
     title: "Test title",
     content: "I am test text-content",
@@ -31,4 +64,4 @@ function createRedditPost(data) {
     htmlBody.appendChild(redditPost);
 };
 
-createRedditPost(dummyData);
+// createRedditPost(dummyData);
