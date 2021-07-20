@@ -347,7 +347,6 @@ searchRedditButton.addEventListener('click', function (event) {
 
     var searchTerm = document.getElementById("searchTerm").value;
     console.log(searchTerm);
-    getNewSearchTerm(searchTerm);
 });
 
 //for the Subraddit search submit button
@@ -358,7 +357,6 @@ subredditSearchButton.addEventListener('click', function (event) {
 
     var subredditName = document.getElementById("SubredditName").value
     console.log(subredditName)
-    getNewListings(subredditName)
 });
 
 
