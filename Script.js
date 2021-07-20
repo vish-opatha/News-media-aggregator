@@ -1,4 +1,11 @@
-var postSection = document.querySelector('#results');
+
+var htmlBody = document.querySelector('body');
+var redditInput =document.querySelector('#search-bar');
+var searchRedditBtn =document.querySelector("#search-sub-reddit");
+var subredditSearchButton = document.getElementById('subreddit-search-form');
+
+
+
 
 //Following code should happen on the button click event
 //For now, I am using dummy data
@@ -324,4 +331,28 @@ function displayLatestNews(data)
         }
     }   
 }
+
+// createRedditPost(dummyData);
+
+//for the Raddit search submit button
+
+var searchRedditButton =document.querySelector("#reddit-search-form");
+var subredditSearchButton = document.getElementById('subreddit-search-form');
+
+
+searchRedditButton.addEventListener('click',function(event){
+    event.preventDefault();
+
+    var searchTerm = document.getElementById("searchTerm").value;
+    console.log(searchTerm);
+ });
+
+ //for the Subraddit search submit button
+
+ subredditSearchButton.addEventListener('click',function(event){
+    event.preventDefault()
+
+    var SubredditName = document.getElementById("SubredditName").value
+    console.log(SubredditName)
+ });
 
