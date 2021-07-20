@@ -88,25 +88,28 @@ function createRedditPost(data) {
     redditLink.setAttribute('href', 'https://www.reddit.com' + data.permalink);
     redditLink.setAttribute('target', '_blank');
 
+
+    // add divs to DOM
+    redditPost.appendChild(redditTitle);
+    redditPost.appendChild(redditInfo);
+    redditPost.appendChild(redditLink);
+
     // if the post has selfText create element
     if (data.selftext) {
         var redditTextContent = document.createElement('p');
         redditTextContent.innerHTML = data.selftext.replace(/&amp;/g, '&');
         redditPost.appendChild(redditTextContent);
     }
-    // if the post has an iamge create element
+    // if the post has an image create element
     if (data.preview) {
-        console.log("hello");
+        // console.log("hello");
         var redditPreview = document.createElement('img');
         redditPreview.setAttribute('src', data.preview.images[0].source.url.replace(/&amp;/g, '&'));
         redditPreview.setAttribute('style', 'width: 80%');
         redditPost.appendChild(redditPreview);
     }
 
-    // add divs to DOM
-    redditPost.appendChild(redditTitle);
-    redditPost.appendChild(redditInfo);
-    redditPost.appendChild(redditLink);
+
     redditPostDiv.appendChild(redditPost);
     postSection.appendChild(redditPostDiv);
 
