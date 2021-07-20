@@ -66,43 +66,53 @@ function displayListings(listings) {
 
 //   //I did not find any media urls yet.
 
+// Add reddit data to the DOM
 function createRedditPost(data) {
-    // create container for reddit post
+    // create column container for reddit post
+    var redditPostDiv = document.createElement('div');
+    redditPostDiv.classList = "column is-half-tablet is-one-third-desktop";
+    // create box for styling
     var redditPost = document.createElement('div');
     redditPost.classList = "box"
+    // title of the post
     var redditTitle = document.createElement('h2');
-    redditTitle.textContent = data.title.replace(/&amp;/g, '&');
+    redditTitle.textContent = data.title.replace(/&amp;/g, '&'); //replace &amp; with &
     redditTitle.classList = "title is-4";
+    // author and timestamp
     var redditInfo = document.createElement('p');
-    redditInfo.textContent = "Posted by - " + data.author + ' @ ' + data.created;
-    redditInfo.classList = "tag subtitle is-6";
+    redditInfo.textContent = "Posted by - " + data.author + ' - ' + data.created;
+    redditInfo.classList = "subtitle is-6";
+    // post url
     var redditLink = document.createElement('a');
     redditLink.textContent = data.permalink;
     redditLink.setAttribute('href', 'https://www.reddit.com' + data.permalink);
     redditLink.setAttribute('target', '_blank');
-    redditPost.appendChild(redditTitle);
-    redditPost.appendChild(redditInfo);
-    redditPost.appendChild(redditLink);
 
-
+    // if the post has selfText create element
     if (data.selftext) {
         var redditTextContent = document.createElement('p');
         redditTextContent.innerHTML = data.selftext.replace(/&amp;/g, '&');
         redditPost.appendChild(redditTextContent);
     }
-
+    // if the post has an iamge create element
     if (data.preview) {
         console.log("hello");
         var redditPreview = document.createElement('img');
         redditPreview.setAttribute('src', data.preview.images[0].source.url.replace(/&amp;/g, '&'));
-        redditPreview.setAttribute('style', 'width: 50%');
+        redditPreview.setAttribute('style', 'width: 80%');
         redditPost.appendChild(redditPreview);
     }
 
-    postSection.appendChild(redditPost);
+    // add divs to DOM
+    redditPost.appendChild(redditTitle);
+    redditPost.appendChild(redditInfo);
+    redditPost.appendChild(redditLink);
+    redditPostDiv.appendChild(redditPost);
+    postSection.appendChild(redditPostDiv);
+
 };
 
-
+// add function to all search forms
 function addCollapseListener() {
     var collapseBtns = document.querySelectorAll('.collapse-btn');
 
@@ -113,6 +123,7 @@ function addCollapseListener() {
     };
 };
 
+// function to collapse forms
 function collapseForm(e) {
     var searchForm = e.target.closest('section');
     // get the icon element
