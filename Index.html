@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   
+
     <!--Moment js added by Vish-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 
@@ -44,7 +44,7 @@
                     <div class="field">
                         <label class="label">Search Term</label>
                         <div class="control">
-                            <input type="text" class="input">
+                            <input type="text" class="input" id="searchTerm">
                         </div>
                         <p class="help">Input help text here</p>
                     </div>
@@ -59,7 +59,7 @@
                     </fieldset>
                 </form>
                 <footer class="card-footer">
-                    <a href="#" class="card-footer-item">Submit</a>
+                    <a href="#" class="card-footer-item" id="reddit-search-button">Submit</a>
                 </footer>
             </section>
 
@@ -99,8 +99,8 @@
             </section>
         </section>
 
-        <div id="resultsCont">
-            <div id="content from api"></div>
+        <div id="results" class="container section">
+
         </div>
 
         <script src="Script.js"></script>
