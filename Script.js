@@ -1,7 +1,9 @@
 
 var htmlBody = document.querySelector('body');
+
 var redditInput = document.querySelector('#search-bar');
 var postSection = document.querySelector('#results');
+
 
 
 
@@ -321,23 +323,29 @@ function displaySTListings(listings) {
 
 //for the Raddit search submit button
 
+
 var searchRedditButton = document.querySelector("#reddit-search-button");
 var subredditSearchButton = document.getElementById('subreddit-search-form');
 
 
 searchRedditButton.addEventListener('click', function (event) {
+
     event.preventDefault();
 
     var searchTerm = document.getElementById("searchTerm").value;
     console.log(searchTerm);
+
 });
 
 //for the Subraddit search submit button
 
 subredditSearchButton.addEventListener('click', function (event) {
+
     event.preventDefault()
 
     var SubredditName = document.getElementById("SubredditName").value
     console.log(SubredditName)
+
 });
+
 
