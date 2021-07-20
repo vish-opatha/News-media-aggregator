@@ -105,6 +105,45 @@
             </section>
         </section>
 
+        <!-- Added form for Guardian search -->
+        <section class="card mb-3" data-visible="visible">
+            <header class="card-header">
+                <p class="card-header-title">
+                    The Guardian Search - <span class="is-italic has-text-weight-light ml-1">
+                        Get articles from a specific Guardian term</span>
+                </p>
+                <button class="card-header-icon collapse-btn" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-up" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </header>
+            <form class="card-content">
+                <div class="field">
+                    <label class="label">The Guardian term</label>
+                    <div class="control">
+                        <input type="text" class="input" id="SubredditName">
+                    </div>
+                    <p class="help">Input help text here</p>
+                </div>
+                <fieldset disabled>
+                    <div class="field">
+                        <label class="label">Number of Results</label>
+                        <div class="control">
+                            <input type="number" class="input" value="10">
+                        </div>
+                        <p class="help">Input help text here</p>
+                    </div>
+                </fieldset>
+            </form>
+            <footer class="card-footer">
+
+                <a href="#" class="card-footer-item" id="guardian-search-form">Submit</a>
+              
+            </footer>
+        </section>
+    </section>
+
         <div id="results" class="container section columns is-multiline" style="word-wrap: break-word">
 
         </div>
