@@ -57,20 +57,6 @@ function displayListings(listings) {
             listings.data.children[i].data.created = moment(listings.data.children[i].data.created_utc, 'X').format("dddd, MMMM Do YYYY, h:mm:ss a");
             createRedditPost(listings.data.children[i].data);
 
-            //     var listingTitle = listings.data.children[i].data.title;
-            //     var listingContent = listings.data.children[i].data.selftext;
-            //     var listingAuthor = listings.data.children[i].data.author;
-            //     var listingUrl = listings.data.children[i].data.url;
-            //     var listingUpdated = moment(listings.data.children[i].data.created, "X").format("dddd, MMMM Do YYYY, h:mm:ss a")
-
-            //     //var listingMedia= 
-
-            //     console.log(listingTitle);
-            //     console.log(listingContent);
-            //     console.log(listingAuthor);
-            //     console.log(listingUrl);
-            //     console.log(listingUpdated);
-            // }
         }
     }
 };
@@ -221,45 +207,6 @@ function collapseForm(e) {
 
 addCollapseListener();
 
-//============== This function does not provide facility to work on the browser for free API KEYS=============
-// ########## This function fetch data from NEWS api  related to headlines ########
-// Can incorperate changes to ask the user to select the country and category
-// Country selection can be from a list ========>current selection is AU
-// Category selection can be corperated to make the function versatile 
-// Categories given business entertainment general health science sports technology ===> current selection is HEALTH
-
-var countrySelected = "au";
-var categorySelected = "health";
-var newsApiKey = "3f73e3712c734a048328f3b81657a073";
-
-function getHeadlinesbyNewsAPI(countrySelected, categorySelected) {
-    var fetchUrl = "https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=3f73e3712c734a048328f3b81657a073";
-
-    fetch(fetchUrl)
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (data) {
-                    //displayHeadlines(data);
-                    console.log(data);
-                });
-            }
-
-            else if (response.status === 404) {
-                displayError("This does not exist");
-            }
-        })
-        .catch(function (error) {
-            displayError(error);
-        });
-};
-
-// ######### This function is used to display the headlines fetched from NEWSApi###################
-function displayHeadlines(headlines) {
-
-}
-//======================================================================================================
-https://content.guardianapis.com/search?q=adelaide&query-fields=body&order-by=newest&format=json&api-key=dbc57ace-ea2e-44d4-a7fc-15eef74c24ad
-
 
 // ######### This function fetches data using guardian API and provides lates news related to a given term.
 var guardianKey = "dbc57ace-ea2e-44d4-a7fc-15eef74c24ad";
@@ -301,6 +248,8 @@ function displayLatestNews(data) {
     }
 
     else {
+        console.log ("This is guardian data");
+        console.log(data);
         for (var i = 0; i < data.response.results.length; i++) {
             var postTitle = data.response.results[i].webTitle;
             var postUrl = data.response.results[i].webUrl;
@@ -308,12 +257,34 @@ function displayLatestNews(data) {
             var apiUrl = data.response.results[i].apiUrl;
 
             console.log(postTitle);
-            console.log(postUrl);
-            console.log(postDate);
             console.log(apiUrl);
+            console.log(postDate);
 
-            // This object does not contain any media urls
+            var guardianHeadlineDiv = document.createElement('div');
+            guardianHeadlineDiv.classList = "column is-half-tablet is-one-third-desktop";
+    
+            var guardianHeadline = document.createElement('div');
+            guardianHeadline.classList = "box";
+           
+            var guardianTitle = document.createElement('h2');
+            guardianTitle.textContent = postTitle;
+            guardianTitle.classList = "title is-4";
+   
+            var postDateStamp = document.createElement('p');
+            postDateStamp.textContent = "Posted on - " + postDate;
+            postDateStamp.classList = "subtitle is-6";
+  
+            var gaurdianLink = document.createElement('a');
+            gaurdianLink.textContent = "View the page:";
+            gaurdianLink.setAttribute('href', postUrl);
+            gaurdianLink.setAttribute('target', '_blank');
 
+            guardianHeadline.appendChild(guardianTitle);
+            guardianHeadline.appendChild(postDateStamp);
+            guardianHeadline.appendChild(gaurdianLink);
+            
+            guardianHeadlineDiv.appendChild(guardianHeadline);
+            postSection.appendChild(guardianHeadlineDiv);
         }
     }
 }
