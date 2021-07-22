@@ -178,7 +178,7 @@ function addCollapseListener() {
     var collapseBtns = document.querySelectorAll('.collapse-btn');
 
     for (var i = 0; i < collapseBtns.length; i++) {
-        collapseBtns[i].addEventListener('click', function (e) {
+        collapseBtns[i].parentNode.addEventListener('click', function (e) {
             collapseForm(e);
         });
     };
@@ -309,6 +309,8 @@ function displayError(error) {
 //for the Raddit search submit button
 
 
+
+var guardianSearchButton = document.getElementById("#The-Guardian-search-form");
 var searchRedditButton = document.querySelector("#reddit-search-button");
 var subredditSearchButton = document.getElementById('subreddit-search-form');
 var clearSearchButton = document.getElementById('clear-results');
@@ -319,7 +321,9 @@ searchRedditButton.addEventListener('click', function (event) {
 
     var searchTerm = document.getElementById("searchTerm").value;
     console.log(searchTerm);
+    getNewSearchTerm(searchTerm);
 });
+
 
 //for the Subraddit search submit button
 
@@ -329,8 +333,21 @@ subredditSearchButton.addEventListener('click', function (event) {
 
     var subredditName = document.getElementById("SubredditName").value
     console.log(subredditName)
+    getNewSearchTerm(subredditName);
+});
+
+//for the The Guardian search submit button
+
+guardianSearchButton.addEventListener('click', function (event) {
+
+    event.preventDefault()
+
+    var theGuardianName = document.getElementById("subreddit").value
+    console.log(theGuardianName)
+    getNewSearchTerm(theGuardianName);
 });
 
 clearSearchButton.addEventListener('click', function () {
     postSection.innerHTML = "";
 });
+
