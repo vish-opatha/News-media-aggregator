@@ -4,7 +4,7 @@ var htmlBody = document.querySelector('body');
 
 var postSection = document.querySelector('#results');
 
-
+var searchSection = document.querySelector('#search-forms');
 
 
 
@@ -20,7 +20,7 @@ if (subredditName) {
 
 
 else {
-    window.alert("Please enter something to search.")
+    displayError("Please enter something to search.")
 }
 
 //########## This function is used to get the new 10 listings of the given subreddit##############
@@ -38,11 +38,11 @@ function getNewListings(subredditName) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist")
             }
         })
         .catch(function (error) {
-            alert('Cannot connect to Reddit');
+            displayError(error + ". cannot connect to Reddit");
         });
 
 }
@@ -57,20 +57,6 @@ function displayListings(listings) {
             listings.data.children[i].data.created = moment(listings.data.children[i].data.created_utc, 'X').format("dddd, MMMM Do YYYY, h:mm:ss a");
             createRedditPost(listings.data.children[i].data);
 
-            //     var listingTitle = listings.data.children[i].data.title;
-            //     var listingContent = listings.data.children[i].data.selftext;
-            //     var listingAuthor = listings.data.children[i].data.author;
-            //     var listingUrl = listings.data.children[i].data.url;
-            //     var listingUpdated = moment(listings.data.children[i].data.created, "X").format("dddd, MMMM Do YYYY, h:mm:ss a")
-
-            //     //var listingMedia= 
-
-            //     console.log(listingTitle);
-            //     console.log(listingContent);
-            //     console.log(listingAuthor);
-            //     console.log(listingUrl);
-            //     console.log(listingUpdated);
-            // }
         }
     }
 };
@@ -135,7 +121,7 @@ if (searchTerm) {
 }
 
 else {
-    window.alert("Please enter something to search.")
+    displayError("Please enter something to search.")
 }
 
 //########## This function is used to get the new 10 listings of the given SEARCH TERM ##############
@@ -152,11 +138,11 @@ function getNewSearchTerm(searchTerm) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist");
             }
         })
         .catch(function (error) {
-            alert('Cannot connect to Reddit');
+            displayError("Cannot connect to Reddit");
         });
 
 }
@@ -176,9 +162,8 @@ function displaySTListings(listings) {
             var listingUrl = listings.data.children[i].data.url;
             var listingUpdated = moment(listings.data.children[i].data.created, "X").format("dddd, MMMM Do YYYY, h:mm:ss a")
 
-            var listingMedia =
 
-                console.log(listingTitle);
+            console.log(listingTitle);
             console.log(listingContent);
             console.log(listingAuthor);
             console.log(listingUrl);
@@ -186,137 +171,137 @@ function displaySTListings(listings) {
 
         }
     }
+};
 
-    // add function to all search forms
-    function addCollapseListener() {
-        var collapseBtns = document.querySelectorAll('.collapse-btn');
+// add function to all search forms
+function addCollapseListener() {
+    var collapseBtns = document.querySelectorAll('.collapse-btn');
 
-        for (var i = 0; i < collapseBtns.length; i++) {
-            collapseBtns[i].addEventListener('click', function (e) {
-                collapseForm(e);
-            });
-        };
+    for (var i = 0; i < collapseBtns.length; i++) {
+        collapseBtns[i].parentNode.addEventListener('click', function (e) {
+            collapseForm(e);
+        });
     };
+};
 
-    // function to collapse forms
-    function collapseForm(e) {
-        var searchForm = e.target.closest('section');
-        // get the icon element
-        var collapseIcon = e.currentTarget.children[0].children[0];
+// function to collapse forms
+function collapseForm(e) {
+    var searchForm = e.target.closest('section');
+    // get the icon element
+    var collapseIcon = e.currentTarget.children[0].children[0];
 
-        if (searchForm.dataset.visible === 'visible') {
-            collapseIcon.classList.add('fa-angle-down')
-            collapseIcon.classList.remove('fa-angle-up')
-            searchForm.dataset.visible = 'hidden';
-            searchForm.children[1].setAttribute('style', 'display:none');
-            searchForm.children[2].setAttribute('style', 'display:none');
-        } else {
-            collapseIcon.classList.add('fa-angle-up')
-            collapseIcon.classList.remove('fa-angle-down')
-            searchForm.dataset.visible = 'visible';
-            searchForm.children[1].setAttribute('style', '');
-            searchForm.children[2].setAttribute('style', '');
-        }
+    if (searchForm.dataset.visible === 'visible') {
+        collapseIcon.classList.add('fa-angle-down')
+        collapseIcon.classList.remove('fa-angle-up')
+        searchForm.dataset.visible = 'hidden';
+        searchForm.children[1].setAttribute('style', 'display:none');
+        searchForm.children[2].setAttribute('style', 'display:none');
+    } else {
+        collapseIcon.classList.add('fa-angle-up')
+        collapseIcon.classList.remove('fa-angle-down')
+        searchForm.dataset.visible = 'visible';
+        searchForm.children[1].setAttribute('style', '');
+        searchForm.children[2].setAttribute('style', '');
+    }
+}
+
+addCollapseListener();
+
+
+// ######### This function fetches data using guardian API and provides lates news related to a given term.
+var guardianKey = "dbc57ace-ea2e-44d4-a7fc-15eef74c24ad";
+var searchT = "Adelaide" // This is the user input
+function searchByGuardian(searchTerm) {
+    if (searchTerm === "") {
+        displayError("Please enter something to search");
+        return;
     }
 
-    addCollapseListener();
+    // This function is tailored to get the latest updates/news related to a given term.
+    var fetchUrl = "https://content.guardianapis.com/search?q=" + searchTerm + "&query-fields=body&order-by=newest&format=json&api-key=" + guardianKey;
 
-    //============== This function does not provide facility to work on the browser for free API KEYS=============
-    // ########## This function fetch data from NEWS api  related to headlines ########
-    // Can incorperate changes to ask the user to select the country and category
-    // Country selection can be from a list ========>current selection is AU
-    // Category selection can be corperated to make the function versatile 
-    // Categories given business entertainment general health science sports technology ===> current selection is HEALTH
-
-    var countrySelected = "au";
-    var categorySelected = "health";
-    var newsApiKey = "3f73e3712c734a048328f3b81657a073";
-
-    function getHeadlinesbyNewsAPI(countrySelected, categorySelected) {
-        var fetchUrl = "https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=3f73e3712c734a048328f3b81657a073";
-
-        fetch(fetchUrl)
-            .then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (data) {
-                        //displayHeadlines(data);
-                        console.log(data);
-                    });
-                }
-
-                else if (response.status === 404) {
-                    Window.alert("This does not exist");
-                }
-            })
-            .catch(function (error) {
-                alert(error);
-            });
-    };
-
-    // ######### This function is used to display the headlines fetched from NEWSApi###################
-    function displayHeadlines(headlines) {
-
-    }
-    //======================================================================================================
-    https://content.guardianapis.com/search?q=adelaide&query-fields=body&order-by=newest&format=json&api-key=dbc57ace-ea2e-44d4-a7fc-15eef74c24ad
-
-
-    // ######### This function fetches data using guardian API and provides lates news related to a given term.
-    var guardianKey = "dbc57ace-ea2e-44d4-a7fc-15eef74c24ad";
-    var searchT = "Adelaide" // This is the user input
-    function searchByGuardian(searchTerm) {
-        if (searchTerm === "") {
-            window.alert("Please enter something to search");
-            return;
-        }
-
-        // This function is tailored to get the latest updates/news related to a given term.
-        var fetchUrl = "https://content.guardianapis.com/search?q=" + searchTerm + "&query-fields=body&order-by=newest&format=json&api-key=" + guardianKey;
-
-        fetch(fetchUrl)
-            .then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (data) {
-                        displayLatestNews(data);
-                        console.log(data);
-                    });
-                }
-
-                else if (response.status === 404) {
-                    Window.alert("This does not exist");
-                }
-            })
-            .catch(function (error) {
-                alert(error);
-            });
-
-    }
-
-    searchByGuardian(searchT);
-
-    function displayLatestNews(data) {
-        if (data.response.results.length === 0) {
-            console.log("Nothing found to display for this search term.");
-            return;
-        }
-
-        else {
-            for (var i = 0; i < data.response.results.length; i++) {
-                var postTitle = data.response.results[i].webTitle;
-                var postUrl = data.response.results[i].webUrl;
-                var postDate = moment(data.response.results[i].webPublicationDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
-                var apiUrl = data.response.results[i].apiUrl;
-
-                console.log(postTitle);
-                console.log(postUrl);
-                console.log(postDate);
-                console.log(apiUrl);
-
-                // This object does not contain any media urls
-
+    fetch(fetchUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displayLatestNews(data);
+                    console.log(data);
+                });
             }
+
+            else if (response.status === 404) {
+                displayError("This does not exist");
+            }
+        })
+        .catch(function (error) {
+            displayError(error);
+        });
+
+}
+
+searchByGuardian(searchT);
+
+function displayLatestNews(data) {
+    if (data.response.results.length === 0) {
+        console.log("Nothing found to display for this search term.");
+        return;
+    }
+
+    else {
+        console.log("This is guardian data");
+        console.log(data);
+        for (var i = 0; i < data.response.results.length; i++) {
+            var postTitle = data.response.results[i].webTitle;
+            var postUrl = data.response.results[i].webUrl;
+            var postDate = moment(data.response.results[i].webPublicationDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            var apiUrl = data.response.results[i].apiUrl;
+
+            console.log(postTitle);
+            console.log(apiUrl);
+            console.log(postDate);
+
+            var guardianHeadlineDiv = document.createElement('div');
+            guardianHeadlineDiv.classList = "column is-half-tablet is-one-third-desktop";
+
+            var guardianHeadline = document.createElement('div');
+            guardianHeadline.classList = "box";
+
+            var guardianTitle = document.createElement('h2');
+            guardianTitle.textContent = postTitle;
+            guardianTitle.classList = "title is-4";
+
+            var postDateStamp = document.createElement('p');
+            postDateStamp.textContent = "Posted on - " + postDate;
+            postDateStamp.classList = "subtitle is-6";
+
+            var gaurdianLink = document.createElement('a');
+            gaurdianLink.textContent = "View the page:";
+            gaurdianLink.setAttribute('href', postUrl);
+            gaurdianLink.setAttribute('target', '_blank');
+
+            guardianHeadline.appendChild(guardianTitle);
+            guardianHeadline.appendChild(postDateStamp);
+            guardianHeadline.appendChild(gaurdianLink);
+
+            guardianHeadlineDiv.appendChild(guardianHeadline);
+            postSection.appendChild(guardianHeadlineDiv);
         }
     }
+}
+
+
+function displayError(error) {
+    console.log(error);
+    var errorMessageDiv = document.createElement('div');
+    errorMessageDiv.classList = "notification is-danger";
+    errorMessageDiv.textContent = "Woops something went wrong! Error Message: " + error;
+
+    searchSection.prepend(errorMessageDiv);
+
+    setTimeout(() => {
+        errorMessageDiv.remove();
+    }, 3000);
+
 }
 
 // createRedditPost(dummyData);
@@ -324,9 +309,11 @@ function displaySTListings(listings) {
 //for the Raddit search submit button
 
 
+
+var guardianSearchButton = document.getElementById("guardian-search-form");
 var searchRedditButton = document.querySelector("#reddit-search-button");
 var subredditSearchButton = document.getElementById('subreddit-search-form');
-
+var clearSearchButton = document.getElementById('clear-results');
 
 var subRedditInput = document.querySelector('#SubredditName');
 var guardianInput = document.querySelector('#gaurdian-search-term');
@@ -349,6 +336,7 @@ var guardianInput = document.querySelector('#gaurdian-search-term');
 searchRedditButton.addEventListener('click', function (event) {
 
     event.preventDefault();
+
 
     var redditInput = document.querySelector('#searchTerm');
     
@@ -394,13 +382,21 @@ function drawSavedSearches() {
   };
 
 
+   
+  
+    getNewSearchTerm(searchTerm);
+});
+
+
+
 //for the Subraddit search submit button
 
 subredditSearchButton.addEventListener('click', function (event) {
 
     event.preventDefault()
 
-    var SubredditName = document.getElementById("SubredditName");
+
+    
     
     savedSR.push(SubredditName.value);
     localStorage.setItem("Sub-Reddit Name", JSON.stringify(savedSR));
@@ -425,5 +421,26 @@ function drawSavedSearches() {
     recentDD.innerHTML= recentST[recentST.length -1];
     }
 };
+
+    var subredditName = document.getElementById("SubredditName").value
+    console.log(subredditName)
+    getNewListings(subredditName);
+});
+
+//for the The Guardian search submit button
+
+guardianSearchButton.addEventListener('click', function (event) {
+
+    event.preventDefault()
+
+    var theGuardianName = document.getElementById("guardian-term").value
+    console.log(theGuardianName);
+    searchByGuardian(theGuardianName);
+});
+
+clearSearchButton.addEventListener('click', function () {
+    postSection.innerHTML = "";
+});
+
 
 //Retrieve local storage and put data into drop down as a recent search//
