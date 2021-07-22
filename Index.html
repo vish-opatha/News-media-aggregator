@@ -44,7 +44,8 @@
                     <div class="field">
                         <label class="label">Search Term</label>
                         <div class="control">
-                            <input type="text" class="input" id="searchTerm">
+                            <input type="text" class="input" id="searchTerm" list="search-term-history">
+                            <datalist id="search-term-history"></datalist>
                         </div>
                         <p class="help">Input help text here</p>
                     </div>
@@ -84,6 +85,7 @@
                         <label class="label">Subreddit Name</label>
                         <div class="control">
                             <input type="text" class="input" id="SubredditName">
+                            <datalist id="subreddit-name-history"></datalist>
                         </div>
                         <p class="help">Input help text here</p>
                     </div>
@@ -122,7 +124,7 @@
                 <div class="field">
                     <label class="label">The Guardian term</label>
                     <div class="control">
-                        <input type="text" class="input" id="SubredditName">
+                        <input type="text" class="input" id="gaurdian-search-term">
                     </div>
                     <p class="help">Input help text here</p>
                 </div>
@@ -131,6 +133,7 @@
                         <label class="label">Number of Results</label>
                         <div class="control">
                             <input type="number" class="input" value="10">
+                            <datalist id="guardian-term-history"></datalist>
                         </div>
                         <p class="help">Input help text here</p>
                     </div>
