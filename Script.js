@@ -248,7 +248,7 @@ function displayLatestNews(data) {
     }
 
     else {
-        console.log ("This is guardian data");
+        console.log("This is guardian data");
         console.log(data);
         for (var i = 0; i < data.response.results.length; i++) {
             var postTitle = data.response.results[i].webTitle;
@@ -262,18 +262,18 @@ function displayLatestNews(data) {
 
             var guardianHeadlineDiv = document.createElement('div');
             guardianHeadlineDiv.classList = "column is-half-tablet is-one-third-desktop";
-    
+
             var guardianHeadline = document.createElement('div');
             guardianHeadline.classList = "box";
-           
+
             var guardianTitle = document.createElement('h2');
             guardianTitle.textContent = postTitle;
             guardianTitle.classList = "title is-4";
-   
+
             var postDateStamp = document.createElement('p');
             postDateStamp.textContent = "Posted on - " + postDate;
             postDateStamp.classList = "subtitle is-6";
-  
+
             var gaurdianLink = document.createElement('a');
             gaurdianLink.textContent = "View the page:";
             gaurdianLink.setAttribute('href', postUrl);
@@ -282,7 +282,7 @@ function displayLatestNews(data) {
             guardianHeadline.appendChild(guardianTitle);
             guardianHeadline.appendChild(postDateStamp);
             guardianHeadline.appendChild(gaurdianLink);
-            
+
             guardianHeadlineDiv.appendChild(guardianHeadline);
             postSection.appendChild(guardianHeadlineDiv);
         }
@@ -310,7 +310,7 @@ function displayError(error) {
 
 
 
-var guardianSearchButton = document.getElementById("#The-Guardian-search-form");
+var guardianSearchButton = document.getElementById("guardian-search-form");
 var searchRedditButton = document.querySelector("#reddit-search-button");
 var subredditSearchButton = document.getElementById('subreddit-search-form');
 var clearSearchButton = document.getElementById('clear-results');
@@ -333,7 +333,7 @@ subredditSearchButton.addEventListener('click', function (event) {
 
     var subredditName = document.getElementById("SubredditName").value
     console.log(subredditName)
-    getNewSearchTerm(subredditName);
+    getNewListings(subredditName);
 });
 
 //for the The Guardian search submit button
@@ -342,9 +342,9 @@ guardianSearchButton.addEventListener('click', function (event) {
 
     event.preventDefault()
 
-    var theGuardianName = document.getElementById("subreddit").value
-    console.log(theGuardianName)
-    getNewSearchTerm(theGuardianName);
+    var theGuardianName = document.getElementById("guardian-term").value
+    console.log(theGuardianName);
+    searchByGuardian(theGuardianName);
 });
 
 clearSearchButton.addEventListener('click', function () {
