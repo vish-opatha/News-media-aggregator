@@ -20,7 +20,7 @@ if (subredditName) {
 
 
 else {
-    window.alert("Please enter something to search.")
+    displayError("Please enter something to search.")
 }
 
 //########## This function is used to get the new 10 listings of the given subreddit##############
@@ -38,11 +38,11 @@ function getNewListings(subredditName) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist")
             }
         })
         .catch(function (error) {
-            alert('Cannot connect to Reddit');
+            displayError(error + ". cannot connect to Reddit");
         });
 
 }
@@ -135,7 +135,7 @@ if (searchTerm) {
 }
 
 else {
-    window.alert("Please enter something to search.")
+    displayError("Please enter something to search.")
 }
 
 //########## This function is used to get the new 10 listings of the given SEARCH TERM ##############
@@ -152,11 +152,11 @@ function getNewSearchTerm(searchTerm) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist");
             }
         })
         .catch(function (error) {
-            alert('Cannot connect to Reddit');
+            displayError("Cannot connect to Reddit");
         });
 
 }
@@ -245,11 +245,11 @@ function getHeadlinesbyNewsAPI(countrySelected, categorySelected) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist");
             }
         })
         .catch(function (error) {
-            alert(error);
+            displayError(error);
         });
 };
 
@@ -266,7 +266,7 @@ var guardianKey = "dbc57ace-ea2e-44d4-a7fc-15eef74c24ad";
 var searchT = "Adelaide" // This is the user input
 function searchByGuardian(searchTerm) {
     if (searchTerm === "") {
-        window.alert("Please enter something to search");
+        displayError("Please enter something to search");
         return;
     }
 
@@ -283,11 +283,11 @@ function searchByGuardian(searchTerm) {
             }
 
             else if (response.status === 404) {
-                Window.alert("This does not exist");
+                displayError("This does not exist");
             }
         })
         .catch(function (error) {
-            alert(error);
+            displayError(error);
         });
 
 }
@@ -319,10 +319,11 @@ function displayLatestNews(data) {
 }
 
 
-function displayError() {
+function displayError(error) {
+    console.log(error);
     var errorMessageDiv = document.createElement('div');
     errorMessageDiv.classList = "notification is-danger";
-    errorMessageDiv.textContent = "ERROR!!!"
+    errorMessageDiv.textContent = "Woops something went wrong! Error Message: " + error;
 
     searchSection.prepend(errorMessageDiv);
 
