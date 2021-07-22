@@ -306,7 +306,7 @@ function displayError(error) {
 
 // createRedditPost(dummyData);
 
-//for the Raddit search submit button
+
 
 
 
@@ -320,31 +320,33 @@ var guardianInput = document.querySelector('#gaurdian-search-term');
 
 
   // variables to enable localStorage for Reddit Search term
-  var savedST;
-  var storedSearches;
+var savedST;
+var storedSearches;
   // gets search info from localStorage if it exists
-  function getSearches() {
+function getSearches() {
       storedSearches = JSON.parse(localStorage.getItem("Search Term"));
       if (!storedSearches) {
-          savedST = [];
+        savedST = [];
       } else {
-          savedST = storedSearches;
-          drawSavedSearches();
+        savedST = storedSearches;
+          STSavedSearches();
       }
-  };
+};
 
+var STDropDown = document.getElementById("search-term-history");
+getSearches();
+//for the Raddit search submit button
 searchRedditButton.addEventListener('click', function (event) {
 
     event.preventDefault();
 
 
     var redditInput = document.querySelector('#searchTerm');
-    
-    
+
     savedST.push(redditInput.value);
     localStorage.setItem("Search Term", JSON.stringify(savedST));
     //Retrieve local storage and put data into drop down as a recent search//
-    var STDropDown = document.getElementById("search-term-history");
+    
     var recentST = JSON.parse(localStorage.getItem("Search Term"));
     var recentDD = document.createElement("option");
     recentDD.setAttribute("value", recentST[recentST.length -1]);
@@ -354,12 +356,10 @@ searchRedditButton.addEventListener('click', function (event) {
     
 });
 
-getSearches();
 
-function drawSavedSearches() {
-    for(var i= 0; i < storedSearches; i++){
-    
+function STSavedSearches() {
     var recentST = JSON.parse(localStorage.getItem("Search Term"));
+    for(var i= 0; i < storedSearches; i++){
     var recentDD = document.createElement("option");
     recentDD.setAttribute("value", recentST[recentST.length -1]);
     STDropDown.appendChild(recentDD);
@@ -372,20 +372,19 @@ function drawSavedSearches() {
   var storedSubRSearches;
   // gets search info from localStorage if it exists
   function getSubRSearches() {
-      storedSearches = JSON.parse(localStorage.getItem("Search Term"));
-      if (!storedSearches) {
-          savedST = [];
+    storedSubRSearches = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+      if (!storedSubRSearches) {
+          savedSR = [];
       } else {
-          savedST = storedSearches;
-          drawSavedSearches();
+          savedSR = storedSubRSearches;
+          SRSavedSearches();
       }
   };
 
-
-   
+var SRDropDown = document.getElementById("subreddit-name-history");
+getSubRSearches();
   
-    getNewSearchTerm(searchTerm);
-});
+getNewSearchTerm(searchTerm);
 
 
 
@@ -394,24 +393,67 @@ function drawSavedSearches() {
 subredditSearchButton.addEventListener('click', function (event) {
 
     event.preventDefault()
-
-
-    
-    
+    var subredditName = document.getElementById("SubredditName").value
     savedSR.push(SubredditName.value);
     localStorage.setItem("Sub-Reddit Name", JSON.stringify(savedSR));
     //Retrieve local storage and put data into drop down as a recent search//
-    var SRDropDown = document.getElementById("subreddit-name-history");
+    
     var recentSR = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
     var recentDDSR = document.createElement("option");
     recentDDSR.setAttribute("value", recentSR[recentSR.length -1]);
     SRDropDown.appendChild(recentDDSR);
     recentDDSR.innerHTML= recentSR[recentSR.length -1];
-    console.log(recentST);
+    console.log(subredditName)
+    getNewListings(subredditName);
 });
 
 //looping over the aaray to get persist the data.
-function drawSavedSearches() {
+function SRSavedSearches() {
+    var recentSR = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+    for(var i= 0; i < recentSR.length; i++){
+     var recentDDSR = document.createElement("option");
+     recentDDSR.setAttribute("value", recentSR[recentSR.length -1]);
+     SRDropDown.appendChild(recentDDSR);
+     recentDDSR.innerHTML= recentSR[recentSR.length -1];
+    }
+};
+
+  // variables to enable localStorage for The Guardian Search term
+var savedGuard;
+var storedGuardSearches;
+  // gets search info from localStorage if it exists
+function getGuardSearches() {
+    storedGuardSearches = JSON.parse(localStorage.getItem("Guardian Term"));
+      if (!storedGuardSearches) {
+        savedGuard = [];
+      } else {
+        savedGuard = storedGuardSearches;
+        GuardSavedSearches();
+      }
+};
+
+var guardDropDown = document.getElementById("guardian-name-history");
+GuardSavedSearches();
+//for the The Guardian search submit button
+
+guardianSearchButton.addEventListener('click', function (event) {
+
+    event.preventDefault();
+
+    var theGuardianName = document.getElementById("guardian-term");
+    savedGuard.push(theGuardianName.value);
+    localStorage.setItem("Guardian Term", JSON.stringify(savedGuard));
+    //Retrieve local storage and put data into drop down as a recent search//
+    
+    var recentGuardST = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+    var recentDDGuard = document.createElement("option");
+    recentDDGuard.setAttribute("value", recentGuardST[recentGuardST.length -1]);
+    guardDropDown.appendChild(recentDDGuard);
+    recentDDGuard.innerHTML= recentGuardST[recentGuardST.length -1];
+    searchByGuardian(theGuardianName);
+});
+
+function GuardSavedSearches() {
     for(var i= 0; i < storedSearches; i++){
     
     var recentST = JSON.parse(localStorage.getItem("Search Term"));
@@ -421,22 +463,6 @@ function drawSavedSearches() {
     recentDD.innerHTML= recentST[recentST.length -1];
     }
 };
-
-    var subredditName = document.getElementById("SubredditName").value
-    console.log(subredditName)
-    getNewListings(subredditName);
-});
-
-//for the The Guardian search submit button
-
-guardianSearchButton.addEventListener('click', function (event) {
-
-    event.preventDefault()
-
-    var theGuardianName = document.getElementById("guardian-term").value
-    console.log(theGuardianName);
-    searchByGuardian(theGuardianName);
-});
 
 clearSearchButton.addEventListener('click', function () {
     postSection.innerHTML = "";
