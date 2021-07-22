@@ -340,7 +340,7 @@ function displayError(error) {
 
 var searchRedditButton = document.querySelector("#reddit-search-button");
 var subredditSearchButton = document.getElementById('subreddit-search-form');
-
+var clearSearchButton = document.getElementById('clear-results');
 
 searchRedditButton.addEventListener('click', function (event) {
 
@@ -360,4 +360,6 @@ subredditSearchButton.addEventListener('click', function (event) {
     console.log(subredditName)
 });
 
-
+clearSearchButton.addEventListener('click', function () {
+    postSection.innerHTML = "";
+});
