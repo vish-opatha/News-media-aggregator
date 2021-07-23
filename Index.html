@@ -20,17 +20,22 @@
 <body>
 
     <header class="hero is-primary mb-3">
-        <div class="hero-body  is-center">
-            <h1 class="title">News/Media Aggregator <i class="fas fa-newspaper is-center"></i> </h1>
-            <p class="subtitle">Search and display posts from your favourite news/media website!</p>
-            <div class="navbar-end">
-                <nav class="navbar is-right" role="navigation" aria-label="main navigation">
-                </nav>
-
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title">News/Media Aggregator <i class="fas fa-newspaper is-center"></i> </h1>
+                    <p class="subtitle">Search and display posts from your favourite news/media website!</p>
+                </div>
+                <div class="column">
+                    <a target="_blank" href="https://www.booked.net/weather/adelaide-30194"
+                        class="is-flex is-justify-content-flex-end" style="width:100%">
+                        <img src="https://w.bookcdn.com/weather/picture/23_30194_1_1_17bc9c_250_13a085_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=19345"
+                            alt="booked.net" /></a>
+                </div>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu is-active">
-                <div class="navbar-end" href="#Reddit-search-form">
+                <div class="navbar-end" href="#reddit-search-form">
                     <a class="navbar-item">
                         Reddit Search
                     </a>
@@ -47,10 +52,10 @@
 
     <main class="container">
         <section id="search-forms">
-            <section class="card mb-3" data-visible="visible">
+            <section class="card mb-3" data-visible="visible" id="reddit-search-form">
                 <header class="card-header">
                     <p class="card-header-title">
-                        Reddit Search - <span class="is-italic has-text-weight-light ml-1 ">
+                        Reddit Search - <span class="is-italic has-text-weight-light ml-1">
                             Get posts related to your search term from Reddit</span>
                     </p>
                     <button class="card-header-icon collapse-btn" aria-label="more options">
@@ -66,7 +71,7 @@
                             <input type="text" class="input" id="searchTerm" list="search-term-history">
                             <datalist id="search-term-history"></datalist>
                         </div>
-                        <p class="help">Input help text here</p>
+                        <p class="help">Please enter the search term here.</p>
                     </div>
                     <fieldset disabled>
                         <div class="field">
@@ -74,7 +79,7 @@
                             <div class="control">
                                 <input type="number" class="input" value="10">
                             </div>
-                            <p class="help">Input help text here</p>
+                            <p class="help">Please enter the number of results to display, minimum is 10.</p>
                         </div>
                     </fieldset>
                 </form>
@@ -101,12 +106,12 @@
                 </header>
                 <form class="card-content">
                     <div class="field">
-                        <label class="label">Subreddit Name</label>
+                        <label class="label">SubReddit Name</label>
                         <div class="control">
                             <input type="text" class="input" id="SubredditName" list="subreddit-name-history">
                             <datalist id="subreddit-name-history"></datalist>
                         </div>
-                        <p class="help">Input help text here</p>
+                        <p class="help">Please enter the search term here.</p>
                     </div>
                     <fieldset disabled>
                         <div class="field">
@@ -114,7 +119,7 @@
                             <div class="control">
                                 <input type="number" class="input" value="10">
                             </div>
-                            <p class="help">Input help text here</p>
+                            <p class="help">Please enter the number of results to display, minimum is 10.</p>
                         </div>
                     </fieldset>
                 </form>
@@ -129,7 +134,7 @@
             <header class="card-header">
                 <p class="card-header-title">
                     The Guardian Search - <span class="is-italic has-text-weight-light ml-1">
-                        Get articles from a specific Guardian term</span>
+                        Get articles related to latest headlines on The Guardian</span>
                 </p>
                 <button class="card-header-icon collapse-btn" aria-label="more options">
                     <span class="icon">
@@ -139,7 +144,7 @@
             </header>
             <form class="card-content">
                 <div class="field">
-                    <label class="label">The Guardian term</label>
+                    <label class="label">The search term</label>
                     <div class="control">
 
 
@@ -147,18 +152,8 @@
                         <datalist id="guardian-name-history"></datalist>
 
                     </div>
-                    <p class="help">Input help text here</p>
+                    <p class="help">Please enter the number of results to display, minimum is 10.</p>
                 </div>
-                <!-- <fieldset disabled>
-                    <div class="field">
-                        <label class="label">Number of Results</label>
-                        <div class="control">
-                            <input type="number" class="input" value="10">
-                            <datalist id="guardian-term-history"></datalist>
-                        </div>
-                        <p class="help">Input help text here</p>
-                    </div>
-                </fieldset> -->
             </form>
             <footer class="card-footer">
                 <a href="#" class="card-footer-item" id="guardian-search-form">Submit</a>
