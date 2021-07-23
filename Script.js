@@ -6,18 +6,12 @@ var postSection = document.querySelector('#results');
 
 var searchSection = document.querySelector('#search-forms');
 
-
-
-//Following code should happen on the button click event
-//For now, I am using dummy data
-
 var subredditName = "Adelaide";
 
 if (subredditName) {
     getNewListings(subredditName);
     subredditName = "";
 }
-
 
 else {
     displayError("Please enter something to search.")
@@ -61,7 +55,14 @@ function displayListings(listings) {
     }
 };
 
-//   //I did not find any media urls yet.
+//#######Function to reduce the number of characters in the post ##############
+//####### This function is actually not integrated to the create posts/display posts functions############
+function reduceCharacters(str)
+{
+        var a = str.slice(0, 50) + "...";
+        console.log("final string" +a);    
+}
+
 
 // Add reddit data to the DOM
 function createRedditPost(data) {
@@ -70,7 +71,8 @@ function createRedditPost(data) {
     redditPostDiv.classList = "column is-half-tablet is-one-third-desktop";
     // create box for styling
     var redditPost = document.createElement('div');
-    redditPost.classList = "box"
+    redditPost.classList = "box";
+    // redditPost.textContent=reduceCharacters("aa")
     // title of the post
     var redditTitle = document.createElement('h2');
     redditTitle.textContent = data.title.replace(/&amp;/g, '&'); //replace &amp; with &
@@ -81,6 +83,7 @@ function createRedditPost(data) {
     redditInfo.classList = "subtitle is-6";
     // post url
     var redditLink = document.createElement('a');
+    
     redditLink.textContent = data.permalink;
     redditLink.setAttribute('href', 'https://www.reddit.com' + data.permalink);
     redditLink.setAttribute('target', '_blank');
@@ -303,10 +306,6 @@ function displayError(error) {
     }, 3000);
 
 }
-
-// createRedditPost(dummyData);
-
-//for the Raddit search submit button
 
 
 var searchRedditButton = document.querySelector("#reddit-search-button");
