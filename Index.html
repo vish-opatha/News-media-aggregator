@@ -14,21 +14,45 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./Style.css">
-    <title>Code Blue</title>
+    <title>News/Media Aggregator</title>
 </head>
 
 <body>
 
     <header class="hero is-primary mb-3">
         <div class="hero-body">
-            <h1 class="title">News/Media Aggregator</h1>
-            <p class="subtitle">Search and display posts from your favourite news/media website!</p>
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title">News/Media Aggregator <i class="fas fa-newspaper is-center"></i> </h1>
+                    <p class="subtitle">Search and display posts from your favourite news/media website!</p>
+                </div>
+                <div class="column">
+                    <a target="_blank" href="https://www.booked.net/weather/adelaide-30194"
+                        class="is-flex is-justify-content-flex-end" style="width:100%">
+                        <img src="https://w.bookcdn.com/weather/picture/23_30194_1_1_17bc9c_250_13a085_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=19345"
+                            alt="booked.net" /></a>
+                </div>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu is-active">
+                <div class="navbar-end" href="#reddit-search-form">
+                    <a class="navbar-item">
+                        Reddit Search
+                    </a>
+                    <a class="navbar-item" href="#Subreddit-search-form">
+                        Subreddit Search
+                    </a>
+                    <a class="navbar-item" href="#The-Guardian-search-form">
+                        The Guardian Search
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="container">
         <section id="search-forms">
-            <section class="card mb-3" data-visible="visible">
+            <section class="card mb-3" data-visible="visible" id="reddit-search-form">
                 <header class="card-header">
                     <p class="card-header-title">
                         Reddit Search - <span class="is-italic has-text-weight-light ml-1">
@@ -44,7 +68,8 @@
                     <div class="field">
                         <label class="label">Search Term</label>
                         <div class="control">
-                            <input type="text" class="input" id="searchTerm">
+                            <input type="text" class="input" id="searchTerm" list="search-term-history">
+                            <datalist id="search-term-history"></datalist>
                         </div>
                         <p class="help">Please enter the search term here.</p>
                     </div>
@@ -62,12 +87,12 @@
 
 
 
-                    <a href="#" class="card-footer-item" id="reddit-search-button">Submit</a>
+                    <a href="#" class="card-footer-item " id="reddit-search-button">Submit</a>
 
                 </footer>
             </section>
 
-            <section class="card mb-3" data-visible="visible">
+            <section class="card mb-3" id="Subreddit-search-form" data-visible="visible">
                 <header class="card-header">
                     <p class="card-header-title">
                         Subreddit Search - <span class="is-italic has-text-weight-light ml-1">
@@ -84,6 +109,7 @@
                         <label class="label">SubReddit Name</label>
                         <div class="control">
                             <input type="text" class="input" id="SubredditName">
+                            <datalist id="subreddit-name-history"></datalist>
                         </div>
                         <p class="help">Please enter the search term here.</p>
                     </div>
@@ -97,16 +123,14 @@
                         </div>
                     </fieldset>
                 </form>
-                <footer class="card-footer">
-
+                <footer class="card-footer is-link">
                     <a href="#" class="card-footer-item" id="subreddit-search-form">Submit</a>
-
                 </footer>
             </section>
         </section>
 
         <!-- Added form for Guardian search -->
-        <section class="card mb-3" data-visible="visible">
+        <section class="card mb-3" id="The-Guardian-search-form" data-visible="visible">
             <header class="card-header">
                 <p class="card-header-title">
                     The Guardian Search - <span class="is-italic has-text-weight-light ml-1">
@@ -122,15 +146,16 @@
                 <div class="field">
                     <label class="label">The search term</label>
                     <div class="control">
-                        <input type="text" class="input" id="SubredditName">
+
+
+                      <input type="text" class="input" id="guardian-term">
+
                     </div>
                     <p class="help">Please enter the number of results to display, minimum is 10.</p>
                 </div>
             </form>
             <footer class="card-footer">
-
                 <a href="#" class="card-footer-item" id="guardian-search-form">Submit</a>
-
             </footer>
         </section>
 
