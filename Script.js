@@ -1,21 +1,6 @@
-
 var htmlBody = document.querySelector('body');
-
-
 var postSection = document.querySelector('#results');
-
 var searchSection = document.querySelector('#search-forms');
-
-var subredditName = "Adelaide";
-
-if (subredditName) {
-    getNewListings(subredditName);
-    subredditName = "";
-}
-
-else {
-    displayError("Please enter something to search.")
-}
 
 //########## This function is used to get the new 10 listings of the given subreddit##############
 
@@ -27,7 +12,6 @@ function getNewListings(subredditName) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayListings(data);
-                    console.log(data);
                 });
             }
 
@@ -44,7 +28,7 @@ function getNewListings(subredditName) {
 // //########## This function is used to display the new listings ##############
 function displayListings(listings) {
     if (listings.data.children.length === 0) {
-        console.log("Nothing found to display for this search term.");
+        displayError("Nothing found to display for this search term.")
         return;
     } else {
         for (var i = 0; i < listings.data.children.length; i++) {
@@ -103,7 +87,6 @@ function createRedditPost(data) {
 
     // if the post has an image create element
     if (data.preview) {
-        // console.log("hello");
         var redditPreview = document.createElement('img');
         redditPreview.setAttribute('src', data.preview.images[0].source.url.replace(/&amp;/g, '&'));
         redditPreview.setAttribute('style', 'width: 80%');
@@ -114,29 +97,14 @@ function createRedditPost(data) {
     postSection.appendChild(redditPostDiv);
 };
 
-//Added by Anthony- Function for the search Term to return the 10 most recent post's related to that term as an object
-var searchTerm = "Adelaide";
-
-if (searchTerm) {
-    console.log(searchTerm);
-    getNewSearchTerm(searchTerm);
-    searchTerm = "";
-}
-
-else {
-    displayError("Please enter something to search.")
-}
-
 //########## This function is used to get the new 10 listings of the given SEARCH TERM ##############
 function getNewSearchTerm(searchTerm) {
-    console.log(searchTerm);
     var requestUrl = "https://www.reddit.com/search.json?q=" + searchTerm + "&type=link&limit=10";
     fetch(requestUrl)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayListings(data);
-                    console.log(data);
                 });
             }
 
@@ -148,32 +116,6 @@ function getNewSearchTerm(searchTerm) {
             displayError("Cannot connect to Reddit");
         });
 
-}
-
-//########## This function is used to display the new listings ##############
-function displaySTListings(listings) {
-    if (listings.data.children.length === 0) {
-        console.log("Nothing found to display for this search term.");
-        return;
-    }
-
-    else {
-        for (var i = 0; i < listings.data.children.length; i++) {
-            var listingTitle = listings.data.children[i].data.title;
-            var listingContent = listings.data.children[i].data.selftext;
-            var listingAuthor = listings.data.children[i].data.author;
-            var listingUrl = listings.data.children[i].data.url;
-            var listingUpdated = moment(listings.data.children[i].data.created, "X").format("dddd, MMMM Do YYYY, h:mm:ss a")
-
-
-            console.log(listingTitle);
-            console.log(listingContent);
-            console.log(listingAuthor);
-            console.log(listingUrl);
-            console.log(listingUpdated);
-
-        }
-    }
 };
 
 // add function to all search forms
@@ -228,7 +170,6 @@ function searchByGuardian(searchTerm) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayLatestNews(data);
-                    console.log(data);
                 });
             }
 
@@ -242,26 +183,18 @@ function searchByGuardian(searchTerm) {
 
 }
 
-searchByGuardian(searchT);
+//searchByGuardian(searchT);
 
 function displayLatestNews(data) {
     if (data.response.results.length === 0) {
-        console.log("Nothing found to display for this search term.");
+        displayError("Nothing found to display for this search term.")
         return;
-    }
-
-    else {
-        console.log("This is guardian data");
-        console.log(data);
+    } else {
         for (var i = 0; i < data.response.results.length; i++) {
             var postTitle = data.response.results[i].webTitle;
             var postUrl = data.response.results[i].webUrl;
             var postDate = moment(data.response.results[i].webPublicationDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            var apiUrl = data.response.results[i].apiUrl;
-
-            console.log(postTitle);
-            console.log(apiUrl);
-            console.log(postDate);
+            //var apiUrl = data.response.results[i].apiUrl;
 
             var guardianHeadlineDiv = document.createElement('div');
             guardianHeadlineDiv.classList = "column is-half-tablet is-one-third-desktop";
@@ -290,11 +223,9 @@ function displayLatestNews(data) {
             postSection.appendChild(guardianHeadlineDiv);
         }
     }
-}
-
+};
 
 function displayError(error) {
-    console.log(error);
     var errorMessageDiv = document.createElement('div');
     errorMessageDiv.classList = "notification is-danger";
     errorMessageDiv.textContent = "Woops something went wrong! Error Message: " + error;
@@ -304,10 +235,7 @@ function displayError(error) {
     setTimeout(() => {
         errorMessageDiv.remove();
     }, 3000);
-
-}
-
-
+};
 
 var guardianSearchButton = document.getElementById("guardian-search-form");
 var searchRedditButton = document.querySelector("#reddit-search-button");
@@ -318,124 +246,150 @@ var subRedditInput = document.querySelector('#SubredditName');
 var guardianInput = document.querySelector('#gaurdian-search-term');
 
 
-  // variables to enable localStorage for Reddit Search term
-  var savedST;
-  var storedSearches;
-  // gets search info from localStorage if it exists
-  function getSearches() {
-      storedSearches = JSON.parse(localStorage.getItem("Search Term"));
-      if (!storedSearches) {
-          savedST = [];
-      } else {
-          savedST = storedSearches;
-          drawSavedSearches();
-      }
-  };
+// variables to enable localStorage for Reddit Search term
+var savedST;
+var storedSearches;
+var STDropDown = document.getElementById("search-term-history");
 
-searchRedditButton.addEventListener('click', function (event) {
-
-    event.preventDefault();
-
-
-    var redditInput = document.querySelector('#searchTerm');
-    
-    
-    savedST.push(redditInput.value);
-    localStorage.setItem("Search Term", JSON.stringify(savedST));
-    //Retrieve local storage and put data into drop down as a recent search//
-    var STDropDown = document.getElementById("search-term-history");
-    var recentST = JSON.parse(localStorage.getItem("Search Term"));
-    var recentDD = document.createElement("option");
-    recentDD.setAttribute("value", recentST[recentST.length -1]);
-    STDropDown.appendChild(recentDD);
-    recentDD.innerHTML= recentST[recentST.length -1];
-    console.log(recentST);
-    
-});
-
-getSearches();
-
-function drawSavedSearches() {
-    for(var i= 0; i < storedSearches; i++){
-    
-    var recentST = JSON.parse(localStorage.getItem("Search Term"));
-    var recentDD = document.createElement("option");
-    recentDD.setAttribute("value", recentST[recentST.length -1]);
-    STDropDown.appendChild(recentDD);
-    recentDD.innerHTML= recentST[recentST.length -1];
+// gets search info from localStorage if it exists
+function getSearches() {
+    storedSearches = JSON.parse(localStorage.getItem("Search Term"));
+    if (!storedSearches) {
+        savedST = [];
+    } else {
+        savedST = storedSearches;
+        STSavedSearches();
     }
 };
 
-  // variables to enable localStorage for Sub Reddit Name
-  var savedSR;
-  var storedSubRSearches;
-  // gets search info from localStorage if it exists
-  function getSubRSearches() {
-      storedSearches = JSON.parse(localStorage.getItem("Search Term"));
-      if (!storedSearches) {
-          savedST = [];
-      } else {
-          savedST = storedSearches;
-          drawSavedSearches();
-      }
-  };
+function STSavedSearches() {
+    var recentST = JSON.parse(localStorage.getItem("Search Term"));
+    for (var i = 0; i < recentST.length; i++) {
+        var recentDD = document.createElement("option");
+        recentDD.setAttribute("value", recentST[i]);
+        STDropDown.appendChild(recentDD);
+        recentDD.innerHTML = recentST[i];
+    }
+};
 
+getSearches();
 
-   
-  
-    getNewSearchTerm(searchTerm);
+//for the Reddit search submit button
+searchRedditButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    var redditInput = document.querySelector('#searchTerm');
+    if (!savedST.includes(redditInput.value)) {
+        savedST.push(redditInput.value);
+        localStorage.setItem("Search Term", JSON.stringify(savedST));
+        //Retrieve local storage and put data into drop down as a recent search//
+        var recentST = JSON.parse(localStorage.getItem("Search Term"));
+        var recentDD = document.createElement("option");
+        recentDD.setAttribute("value", recentST[recentST.length - 1]);
+        STDropDown.appendChild(recentDD);
+        recentDD.innerHTML = recentST[recentST.length - 1];
+    }
+    getNewSearchTerm(redditInput.value);
+    redditInput.value = "";
 });
 
+// variables to enable localStorage for Sub Reddit Name
+var savedSR;
+var storedSubRSearches;
+// gets search info from localStorage if it exists
+function getSubRSearches() {
+    storedSubRSearches = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+    if (!storedSubRSearches) {
+        savedSR = [];
+    } else {
+        savedSR = storedSubRSearches;
+        SRSavedSearches();
+    }
+};
 
+var SRDropDown = document.getElementById("subreddit-name-history");
+getSubRSearches();
+
+// getNewSearchTerm(searchTerm);
 
 //for the Subraddit search submit button
 
 subredditSearchButton.addEventListener('click', function (event) {
-
     event.preventDefault()
-
-
-    
-    
-    savedSR.push(SubredditName.value);
-    localStorage.setItem("Sub-Reddit Name", JSON.stringify(savedSR));
-    //Retrieve local storage and put data into drop down as a recent search//
-    var SRDropDown = document.getElementById("subreddit-name-history");
-    var recentSR = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
-    var recentDDSR = document.createElement("option");
-    recentDDSR.setAttribute("value", recentSR[recentSR.length -1]);
-    SRDropDown.appendChild(recentDDSR);
-    recentDDSR.innerHTML= recentSR[recentSR.length -1];
-    console.log(recentST);
+    var subredditName = document.getElementById("SubredditName").value
+    if (!savedSR.includes(subredditName)) {
+        savedSR.push(SubredditName.value);
+        //Retrieve local storage and put data into drop down as a recent search//
+        localStorage.setItem("Sub-Reddit Name", JSON.stringify(savedSR));
+        var recentSR = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+        var recentDDSR = document.createElement("option");
+        recentDDSR.setAttribute("value", recentSR[recentSR.length - 1]);
+        SRDropDown.appendChild(recentDDSR);
+        recentDDSR.innerHTML = recentSR[recentSR.length - 1];
+    }
+    getNewListings(subredditName);
+    document.getElementById("SubredditName").value = "";
 });
 
 //looping over the aaray to get persist the data.
-function drawSavedSearches() {
-    for(var i= 0; i < storedSearches; i++){
-    
-    var recentST = JSON.parse(localStorage.getItem("Search Term"));
-    var recentDD = document.createElement("option");
-    recentDD.setAttribute("value", recentST[recentST.length -1]);
-    STDropDown.appendChild(recentDD);
-    recentDD.innerHTML= recentST[recentST.length -1];
+function SRSavedSearches() {
+    var recentSR = JSON.parse(localStorage.getItem("Sub-Reddit Name"));
+    for (var i = 0; i < recentSR.length; i++) {
+        var recentDDSR = document.createElement("option");
+        recentDDSR.setAttribute("value", recentSR[i]);
+        SRDropDown.appendChild(recentDDSR);
+        recentDDSR.innerHTML = recentSR[i];
     }
 };
 
-    var subredditName = document.getElementById("SubredditName").value
-    console.log(subredditName)
-    getNewListings(subredditName);
-});
+// variables to enable localStorage for The Guardian Search term
+var savedGuard;
+var storedGuardSearches;
+// gets search info from localStorage if it exists
+function getGuardSearches() {
+    storedGuardSearches = JSON.parse(localStorage.getItem("Guardian Term"));
+    if (!storedGuardSearches) {
+        savedGuard = [];
+    } else {
+        savedGuard = storedGuardSearches;
+        GuardSavedSearches();
+    }
+};
 
+var guardDropDown = document.getElementById("guardian-name-history");
+getGuardSearches();
 //for the The Guardian search submit button
 
 guardianSearchButton.addEventListener('click', function (event) {
 
-    event.preventDefault()
+    event.preventDefault();
 
-    var theGuardianName = document.getElementById("guardian-term").value
-    console.log(theGuardianName);
-    searchByGuardian(theGuardianName);
+    var theGuardianName = document.getElementById("guardian-term");
+    if (!savedGuard.includes(theGuardianName.value)) {
+        savedGuard.push(theGuardianName.value);
+        localStorage.setItem("Guardian Term", JSON.stringify(savedGuard));
+        //Retrieve local storage and put data into drop down as a recent search//
+        var recentGuardST = JSON.parse(localStorage.getItem("Guardian Term"));
+        var recentDDGuard = document.createElement("option");
+        recentDDGuard.setAttribute("value", recentGuardST[recentGuardST.length - 1]);
+        guardDropDown.appendChild(recentDDGuard);
+        recentDDGuard.innerHTML = recentGuardST[recentGuardST.length - 1];
+    };
+
+    searchByGuardian(savedGuard);
+    theGuardianName.value = "";
+
+
 });
+
+function GuardSavedSearches() {
+    var recentGuard = JSON.parse(localStorage.getItem("Guardian Term"));
+    for (var i = 0; i < recentGuard.length; i++) {
+        var recentDD = document.createElement("option");
+        recentDD.setAttribute("value", recentGuard[i]);
+        guardDropDown.appendChild(recentDD);
+        recentDD.innerHTML = recentGuard[i];
+    }
+};
 
 clearSearchButton.addEventListener('click', function () {
     postSection.innerHTML = "";
