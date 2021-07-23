@@ -2,10 +2,14 @@ var htmlBody = document.querySelector('body');
 var postSection = document.querySelector('#results');
 var searchSection = document.querySelector('#search-forms');
 
+
+
+//console.log("RESULTS COUNT: "+redditSearchResults+"RESULTS COUNT" +srResultsCount);
+
 //########## This function is used to get the new 10 listings of the given subreddit##############
 
-function getNewListings(subredditName) {
-    var fetchUrl = "https://www.reddit.com/r/" + subredditName + "/new.json?limit=10";
+function getNewListings(subredditName,count) {
+    var fetchUrl = "https://www.reddit.com/r/" + subredditName + "/new.json?limit="+count;
 
     fetch(fetchUrl)
         .then(function (response) {
@@ -98,8 +102,8 @@ function createRedditPost(data) {
 };
 
 //########## This function is used to get the new 10 listings of the given SEARCH TERM ##############
-function getNewSearchTerm(searchTerm) {
-    var requestUrl = "https://www.reddit.com/search.json?q=" + searchTerm + "&type=link&limit=10";
+function getNewSearchTerm(searchTerm,count) {
+    var requestUrl = "https://www.reddit.com/search.json?q=" + searchTerm + "&type=link&limit="+count;
     fetch(requestUrl)
         .then(function (response) {
             if (response.ok) {
@@ -277,6 +281,10 @@ getSearches();
 //for the Reddit search submit button
 searchRedditButton.addEventListener('click', function (event) {
     event.preventDefault();
+    var redditSearchCount =document.querySelector('#red-result-count').value;
+
+
+
     var redditInput = document.querySelector('#searchTerm');
     if (!savedST.includes(redditInput.value)) {
         savedST.push(redditInput.value);
@@ -288,8 +296,9 @@ searchRedditButton.addEventListener('click', function (event) {
         STDropDown.appendChild(recentDD);
         recentDD.innerHTML = recentST[recentST.length - 1];
     }
-    getNewSearchTerm(redditInput.value);
+    getNewSearchTerm(redditInput.value,redditSearchCount);
     redditInput.value = "";
+    document.querySelector('#red-result-count').value = 1;
 });
 
 // variables to enable localStorage for Sub Reddit Name
@@ -315,7 +324,8 @@ getSubRSearches();
 
 subredditSearchButton.addEventListener('click', function (event) {
     event.preventDefault()
-    var subredditName = document.getElementById("SubredditName").value
+    var subredditName = document.getElementById("SubredditName").value;
+    var srResultsCount = document.querySelector('#subreddit-result-count').value;
     if (!savedSR.includes(subredditName)) {
         savedSR.push(SubredditName.value);
         //Retrieve local storage and put data into drop down as a recent search//
@@ -326,8 +336,9 @@ subredditSearchButton.addEventListener('click', function (event) {
         SRDropDown.appendChild(recentDDSR);
         recentDDSR.innerHTML = recentSR[recentSR.length - 1];
     }
-    getNewListings(subredditName);
+    getNewListings(subredditName,srResultsCount);
     document.getElementById("SubredditName").value = "";
+    document.querySelector('#subreddit-result-count').value =1;
 });
 
 //looping over the aaray to get persist the data.
@@ -357,6 +368,7 @@ function getGuardSearches() {
 
 var guardDropDown = document.getElementById("guardian-name-history");
 getGuardSearches();
+
 //for the The Guardian search submit button
 
 guardianSearchButton.addEventListener('click', function (event) {
@@ -394,6 +406,8 @@ function GuardSavedSearches() {
 clearSearchButton.addEventListener('click', function () {
     postSection.innerHTML = "";
 });
+
+
 
 
 //Retrieve local storage and put data into drop down as a recent search//
