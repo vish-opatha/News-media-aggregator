@@ -62,7 +62,7 @@ Enter your search terms into the corresponding form and click search! Results wi
 
 You can clear the results by clicking the 'Clear Search Results' Button. Your previous searches are saved as suggestions in each input.
 
-The webpage can be viewed here: GITHUB URL
+Here is the Link to the webpage: https://adeamer.github.io/Week-7-Project/Index
 
 Here is a screengrab of the webpage:
 
@@ -79,3 +79,4 @@ To get the search results we use the Reddit API which can be found here: https:/
 We used Bulma for our CSS framework which can be found here: https://bulma.io/ and Font-Awesome for some of Bulmas dependencies which can be found here: https://fontawesome.com/
 
 We also used MomentJS to convert and format the date time data from the API calls, which can be found here: https://momentjs.com/
+
