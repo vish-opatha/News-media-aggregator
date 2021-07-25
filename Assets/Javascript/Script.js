@@ -406,8 +406,3 @@ function GuardSavedSearches() {
 clearSearchButton.addEventListener('click', function () {
     postSection.innerHTML = "";
 });
-
-
-
-
-//Retrieve local storage and put data into drop down as a recent search//
