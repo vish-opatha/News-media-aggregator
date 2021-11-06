@@ -1,4 +1,4 @@
-# Project:-1 Interactive Front-End Application - News/Media Aggregator
+# Interactive Front-End Application - News/Media Aggregator
 
 This app allows the user to search for content from multiple News/Media website (Reddit and Guardian) and have the results dynamically update on the page. So that you can see all your favourite content with out opening multiple tabs or using complex google searches.
 
