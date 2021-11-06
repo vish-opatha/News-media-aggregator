@@ -72,6 +72,13 @@ The following animation demonstrates the application functionality:
 
 ![The animation shows the functionality of using the search forms to dynamically get results from Reddit and The Guardian](./Assets/IMG/Animation.gif)
 
+## Meet the Developers
+There are four contributors to this project. Please find their github profiles below.
+* Vish Opatha
+* Riley Lum
+* Anthony Deamer
+* Akash Kotadiya
+
 ## Credits
 
 To get the search results we use the Reddit API which can be found here: https://www.reddit.com/dev/api/ and the Guardian API which can be found here: https://open-platform.theguardian.com/
@@ -79,4 +86,6 @@ To get the search results we use the Reddit API which can be found here: https:/
 We used Bulma for our CSS framework which can be found here: https://bulma.io/ and Font-Awesome for some of Bulmas dependencies which can be found here: https://fontawesome.com/
 
 We also used MomentJS to convert and format the date time data from the API calls, which can be found here: https://momentjs.com/
+
+
 
